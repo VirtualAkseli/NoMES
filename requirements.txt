@@ -1,6 +1,7 @@
 numpy
 gunicorn
 Flask
+requests
 pandas
 sklearn
 fmiopendata
