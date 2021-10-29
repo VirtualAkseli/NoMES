@@ -3,5 +3,3 @@ gunicorn
 Flask
 pandas
 sklearn
-miopendata.wfs
-model_files
