@@ -1,3 +1,7 @@
 numpy
+gunicorn
+Flask
 pandas
 sklearn
+miopendata
+model_files
