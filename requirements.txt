@@ -3,5 +3,5 @@ gunicorn
 Flask
 pandas
 sklearn
-miopendata
+miopendata.wfs
 model_files
