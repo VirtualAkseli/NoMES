@@ -1,7 +1,7 @@
 from flask import Flask
 from fmiopendata.wfs import download_stored_query
 import datetime
-from model_files import model_utils
+from .model_files import model_utils
 import pickle
 
 app = Flask('app')
