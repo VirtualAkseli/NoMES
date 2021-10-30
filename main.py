@@ -22,26 +22,22 @@ def get_weather_fmi():
     forecast = download_stored_query("fmi::forecast::hirlam::surface::obsstations::multipointcoverage", args=[f"starttime={start_time}"])
 
     station = "Kaisaniemi"
-    cols = ["Air temperature", "Wind speed", "Wind direction", "Wind gust", "Humidity", "Dew point", "Precipitation amount 1 hour"]
+    cols = ["Air temperature", "Wind speed", "Wind direction", "Wind gust", "Humidity", "Dew point"]
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
-    print(weather.tail())
 
     with open('./model_files/model.pkl', 'rb') as f:
+        print("loading model...")
         model = pickle.load(f)
+        print("loaded model with features ", model.feature_names)
+
         f.close()
 
-
-
-
-    # preprocess ei vielä tee mitään
     X = model_utils.preprocess(weather)
     prediction = model_utils.predict(X, model)
 
-    # ei näytä vielä mitään
-    return prediction
-
-
+    print(prediction)
+    return {"prediction": list(prediction)}
 
 
 if __name__ == "__main__":
