@@ -1,10 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template, request
 from fmiopendata.wfs import download_stored_query
 import datetime
 from model_files import model_utils
 import pickle
+import pandas as pd
+import matplotlib.pyplot as plt
 
 app = Flask('app')
+# app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 
 
 @app.route('/', methods=['GET'])
@@ -12,8 +15,20 @@ def test():
     return 'Pinging Model Application!'
 
 
-@app.route('/fmi', methods=['GET'])
+@app.route('/predict', methods=['GET'])
+def form():
+    return render_template("form.html")
+
+
+# @app.route("/result", methods=["POST"])
+# def result():
+#     return render_template("result.html", name=request.form["name"])
+
+
+@app.route('/fmi', methods=['GET', 'POST'])
 def get_weather_fmi():
+    station_name = request.form["station"] 
+    print(station_name)
     now = datetime.datetime.utcnow()
 
     start_time = now - datetime.timedelta(hours=24)
@@ -26,7 +41,8 @@ def get_weather_fmi():
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
 
-    with open('./model_files/model.pkl', 'rb') as f:
+    with open(f'model_{station_name}.pkl', 'rb') as f:
+    
         print("loading model...")
         model = pickle.load(f)
         print("loaded model with features ", model.feature_names)
@@ -36,8 +52,14 @@ def get_weather_fmi():
     X = model_utils.preprocess(weather)
     prediction = model_utils.predict(X, model)
 
-    print(prediction)
-    return {"prediction": list(prediction)}
+    result = pd.DataFrame({"predicted": prediction, "time": weather["time"]})
+    result.plot(x="time")
+    plt.savefig(f"static/{station_name}.png")
+
+    print(result)
+    # return dict(result.predicted)
+    return render_template("result.html", img = f"static/{station_name}.png", name=station_name)
+
 
 
 if __name__ == "__main__":
