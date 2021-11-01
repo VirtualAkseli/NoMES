@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from datetime import datetime
+import datetime
 
 def construct_weather_data(response, station, cols) -> pd.DataFrame:
     timestamps = sorted(response.data.keys())
@@ -102,3 +102,13 @@ def count_changes(station):
 
         # print(counts)
     return counts
+
+def get_start_end_times(time):
+    now = datetime.datetime.utcnow()
+
+    start_time = now
+    end_time = start_time + datetime.timedelta(hours=time)
+    start_time = start_time.isoformat(timespec="seconds") + "Z"
+    end_time = end_time.isoformat(timespec="seconds") + "Z"
+
+    return start_time, end_time
