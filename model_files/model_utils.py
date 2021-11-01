@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from datetime import datetime
+import datetime
 
 def construct_weather_data(response, station, cols) -> pd.DataFrame:
     timestamps = sorted(response.data.keys())
@@ -20,16 +20,15 @@ def construct_weather_data(response, station, cols) -> pd.DataFrame:
         
 # placeholder for data preprocessing function
 def preprocess(weather):
-    
 
     for col in ["Air temperature", "Wind speed", "Wind direction", "Wind gust", "Humidity", "Dew point"]:
         weather[col] = weather[col].interpolate().bfill()
     
-    # print(weather[weather.isnull().any(axis=1)])
 
     weather = parse_timestamps(weather)
     print(weather.head())
-    # print(weather.columns)
+
+    # here model was trained on finnish data
     weather = weather.rename(columns={
         "Air temperature": "Ilman lämpötila (degC)",
         "Wind speed": "Tuulen nopeus (m/s)",
@@ -38,8 +37,6 @@ def preprocess(weather):
         "Humidity": "Suhteellinen kosteus (%)",
         "Dew point": "Kastepistelämpötila (degC)"
     })
-
-    # here model was trained on finnish data
 
     return weather
 
@@ -105,3 +102,13 @@ def count_changes(station):
 
         # print(counts)
     return counts
+
+def get_start_end_times(time):
+    now = datetime.datetime.utcnow()
+
+    start_time = now
+    end_time = start_time + datetime.timedelta(hours=time)
+    start_time = start_time.isoformat(timespec="seconds") + "Z"
+    end_time = end_time.isoformat(timespec="seconds") + "Z"
+
+    return start_time, end_time

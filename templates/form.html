@@ -3,33 +3,49 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <h1>Predict for one station</h1>
+
         <div class="col-8">
           <form action="/result" method="POST">
-            Choose a station:
-            <div class="form-group col-6">
+            Choose station:
+            <div class="form-group col-6">                
                 <select name="station" id="station"> 
                   {% for file in file_names %}
                     <option value={{file}}>{{file}}</option>
                   {% endfor %}
                 </select>
             </div>
+            Choose time interval:
+              <div class="form-group col-6">
+                  <select name="time" id="time"> 
+                    <option value="6">6h</option>
+                    <option value="12">12h</option>
+                    <option value="24">24h</option>
+                    <option value="48">48h</option>
+                  </select>
+              </div>
             <div class="form-group col-6">
               <button type="submit" value="Predict" class="btn btn-primary">Predict</button>
             </div>
           </form>
         </div>
+        <h1>Predict highest need stations</h1>
+        <div class="col-8">
+            <form action="/all" method="POST">
+              Choose time interval:
+                <div class="form-group col-6">
+                    <select name="time" id="time"> 
+                        <option value="6">6h</option>
+                        <option value="12">12h</option>
+                        <option value="24">24h</option>
+                        <option value="48">48h</option>
+                    </select>
+                </div>
+              <div class="form-group col-6">
+                <button type="submit" value="Predict" class="btn btn-primary">Predict</button>
+              </div>
+            </form>
+          </div>
       </div>
 </div>
-
-<!-- 
-<form action="/result" method="POST">
-    Choose a station:
-    <select name="station" id="station"> 
-        <option value="unioninkatu">Unioninkatu</option>
-        <option value="katu">katu</option>
-    </select>
-    <input type="text" name="name"> -->
-    <!-- <br>
-    <input type="submit" value="Predict">
-</form> -->
 {% endblock %}
