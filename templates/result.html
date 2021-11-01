@@ -7,6 +7,20 @@
 </div>
 
 <div class="container"></div>
-<img src="{{img}}">
+    <div class="row" style="display: inline-block; overflow: hidden;">
+        <div style="float: left; margin: 20px">
+            <img src="{{img}}">
+        </div>
+        <div style="margin: 20px;">
+            <h2>About bike demand on this station</h2>
+            <p>
+            During the time interval, the predicted amount of bikes changes {{ changes }} times in total.
+            The minimum of number of bikes is {{ min_bikes }}, and the number drops to the minimum {{ drops_to_min }} times.
+            <p>
+            We estimate that if the number of bikes changes often, the demand of bikes is high. If additionally the number of bikes drops to the minimum many times, and the minimum is low, then there is probably a need for more bikes.
+        </div>
+    </div>
 </div>
+<div>
 {% endblock %}
+</div>

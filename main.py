@@ -6,6 +6,8 @@ import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import model_files
+
 app = Flask('app')
 # app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 
@@ -53,12 +55,19 @@ def get_weather_fmi():
     prediction = model_utils.predict(X, model)
 
     result = pd.DataFrame({"predicted": prediction, "time": weather["time"]})
-    result.plot(x="time")
+
+    result.plot(x="time", figsize=(15,5))
     plt.savefig(f"static/{station_name}.png")
 
     print(result)
+
+    counts = model_utils.count_changes(result)
+    drops, min_bikes = model_utils.count_drops(result)
+
+    print(counts, drops, min_bikes)
+
     # return dict(result.predicted)
-    return render_template("result.html", img = f"static/{station_name}.png", name=station_name)
+    return render_template("result.html", img = f"static/{station_name}.png", name=station_name, changes=counts, drops_to_min = drops, min_bikes = min_bikes)
 
 
 
