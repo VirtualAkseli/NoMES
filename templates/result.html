@@ -7,11 +7,11 @@
 </div>
 
 <div class="container"></div>
-    <div class="row">
-        <div class="col-8">
+    <div class="row" style="display: inline-block; overflow: hidden;">
+        <div style="float: left; margin: 20px">
             <img src="{{img}}">
         </div>
-        <div class="col-4">
+        <div style="margin: 20px;">
             <h2>About bike demand on this station</h2>
             <p>
             During the time interval, the predicted amount of bikes changes {{ changes }} times in total.
@@ -21,4 +21,6 @@
         </div>
     </div>
 </div>
+<div>
 {% endblock %}
+</div>
