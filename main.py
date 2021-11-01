@@ -41,7 +41,7 @@ def get_weather_fmi():
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
 
-    with open(f'model_files/models/model_unioninkatu.pkl', 'rb') as f:
+    with open(f'model_files/models/model_{station_name}', 'rb') as f:
     
         print("loading model...")
         model = pickle.load(f)
