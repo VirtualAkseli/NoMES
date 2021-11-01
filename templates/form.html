@@ -5,13 +5,21 @@
     <div class="row">
         <div class="col-8">
           <form action="/result" method="POST">
-            Choose a station:
+            Choose station:
             <div class="form-group col-6">
                 <select name="station" id="station"> 
                     <option value="unioninkatu">Unioninkatu</option>
                     <option value="katu">katu</option>
                 </select>
             </div>
+            Choose time interval:
+              <div class="form-group col-6">
+                  <select name="time" id="time"> 
+                      <option value="12">12h</option>
+                      <option value="24">24h</option>
+                      <option value="168">1 week</option>
+                  </select>
+              </div>
             <div class="form-group col-6">
               <button type="submit" value="Predict" class="btn btn-primary">Predict</button>
             </div>

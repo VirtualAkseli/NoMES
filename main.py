@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from fmiopendata.wfs import download_stored_query
 import datetime
+
+import requests
 from model_files import model_utils
 import pickle
 import pandas as pd
@@ -29,21 +31,28 @@ def form():
 
 @app.route('/result', methods=['GET', 'POST'])
 def get_weather_fmi():
-    station_name = request.form["station"] 
+    station_name = request.form["station"]
+    time = int(request.form["time"])
     print(station_name)
+    print(time)
     now = datetime.datetime.utcnow()
 
-    start_time = now - datetime.timedelta(hours=24)
+    start_time = now
+    end_time = start_time + datetime.timedelta(hours=time)
     start_time = start_time.isoformat(timespec="seconds") + "Z"
+    end_time = end_time.isoformat(timespec="seconds") + "Z"
 
-    forecast = download_stored_query("fmi::forecast::hirlam::surface::obsstations::multipointcoverage", args=[f"starttime={start_time}"])
+    print(start_time)
+    print(end_time)
+
+    forecast = download_stored_query("fmi::forecast::hirlam::surface::obsstations::multipointcoverage", args=[f"starttime={start_time}", f"endtime={end_time}"])
 
     station = "Kaisaniemi"
     cols = ["Air temperature", "Wind speed", "Wind direction", "Wind gust", "Humidity", "Dew point"]
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
 
-    with open(f'model_files/models/model_{station_name}', 'rb') as f:
+    with open(f'model_files/models/model_{station_name}.pkl', 'rb') as f:
     
         print("loading model...")
         model = pickle.load(f)
