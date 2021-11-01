@@ -21,7 +21,8 @@ def construct_weather_data(response, station, cols) -> pd.DataFrame:
 # placeholder for data preprocessing function
 def preprocess(weather):
     
-    for col in weather.columns:
+
+    for col in ["Air temperature", "Wind speed", "Wind direction", "Wind gust", "Humidity", "Dew point"]:
         weather[col] = weather[col].interpolate().bfill()
     
     # print(weather[weather.isnull().any(axis=1)])
@@ -29,8 +30,6 @@ def preprocess(weather):
     weather = parse_timestamps(weather)
     print(weather.head())
     # print(weather.columns)
-
-    # here model was trained on finnish data
     weather = weather.rename(columns={
         "Air temperature": "Ilman lämpötila (degC)",
         "Wind speed": "Tuulen nopeus (m/s)",
@@ -39,6 +38,8 @@ def preprocess(weather):
         "Humidity": "Suhteellinen kosteus (%)",
         "Dew point": "Kastepistelämpötila (degC)"
     })
+
+    # here model was trained on finnish data
 
     return weather
 
