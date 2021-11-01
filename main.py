@@ -23,12 +23,9 @@ def test():
 @app.route('/predict', methods=['GET'])
 def form():
 
-    file_names = []
-    for file in os.listdir("./model_files/models/"):
-        file = file.replace(".pkl", "").replace("model_", "")
-        file_names.append(file)
+    station_names = model_utils.get_station_names()
 
-    return render_template("form.html", file_names=file_names)
+    return render_template("form.html", file_names=station_names)
 
 @app.route('/all', methods=['POST'])
 def all():
@@ -44,7 +41,7 @@ def all():
     print(weather.head())
     X = model_utils.preprocess(weather)
 
-    station_names = ["unioninkatu", "Arabiankatu", "Betonimies", "Arielinkatu", "Westendintie", "Vilhonvuorenkatu", "Vesakkotie", "Veturitori", "Velodrominrinne", "Valimotie", "Unioninkatu", "Varsapuistikko", "Venttiilikuja", "Vihdintie"]
+    station_names = model_utils.get_station_names()
 
     changes = []
     mins = []

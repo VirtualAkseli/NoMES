@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import os
 
 def construct_weather_data(response, station, cols) -> pd.DataFrame:
     timestamps = sorted(response.data.keys())
@@ -112,3 +113,12 @@ def get_start_end_times(time):
     end_time = end_time.isoformat(timespec="seconds") + "Z"
 
     return start_time, end_time
+
+
+def get_station_names():
+    file_names = []
+    for file in os.listdir("./model_files/models/"):
+        file = file.replace(".pkl", "").replace("model_", "")
+        file_names.append(file)
+
+    return file_names
