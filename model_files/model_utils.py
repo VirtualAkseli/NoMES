@@ -49,11 +49,11 @@ def parse_timestamps(df):
     df = df.assign(month=[x.timetuple().tm_mon for x in df['time']])
     df = df.assign(wday=[x.timetuple().tm_wday for x in df['time']])
     df = df.assign(hour=[x.timetuple().tm_hour for x in df['time']])
+    df['week'] = df.apply(lambda row: row.time.isocalendar()[1], axis=1)
 
+    
     # placeholder values (not done yet)
-    df["week"] = np.repeat(42, len(df))
-    # df['week'] = df.apply(lambda row: row.time.isocalendar().week, axis=1)
-    df["id"] = np.repeat(113, len(df))
+    df["id"] = np.repeat(1, len(df))
     df["yhour"] = np.repeat(1, len(df))
 
     print(df.head())
