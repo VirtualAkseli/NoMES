@@ -25,7 +25,7 @@ def form():
 #     return render_template("result.html", name=request.form["name"])
 
 
-@app.route('/fmi', methods=['GET', 'POST'])
+@app.route('/result', methods=['GET', 'POST'])
 def get_weather_fmi():
     station_name = request.form["station"] 
     print(station_name)
@@ -41,7 +41,7 @@ def get_weather_fmi():
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
 
-    with open(f'model_{station_name}.pkl', 'rb') as f:
+    with open(f'model_unioninkatu.pkl', 'rb') as f:
     
         print("loading model...")
         model = pickle.load(f)

@@ -1,10 +1,34 @@
-<form action="/fmi" method="POST">
+{% extends "layout.html" %}
+{% block title %}Predict{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+          <form action="/result" method="POST">
+            Choose a station:
+            <div class="form-group col-6">
+                <select name="station" id="station"> 
+                    <option value="unioninkatu">Unioninkatu</option>
+                    <option value="katu">katu</option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+              <button type="submit" value="Predict" class="btn btn-primary">Predict</button>
+            </div>
+          </form>
+        </div>
+      </div>
+</div>
+
+<!-- 
+<form action="/result" method="POST">
     Choose a station:
     <select name="station" id="station"> 
         <option value="unioninkatu">Unioninkatu</option>
+        <option value="katu">katu</option>
     </select>
-    <!-- <input type="text" name="name"> -->
-    <br>
-    <input type="submit" value="Lähetä">
-</form>
-    
+    <input type="text" name="name"> -->
+    <!-- <br>
+    <input type="submit" value="Predict">
+</form> -->
+{% endblock %}

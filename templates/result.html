@@ -1,5 +1,12 @@
-Prediction for the next 36h on station {{ name }}
+{% extends "layout.html" %}
+{% block title %}Predict{% endblock %}
+{% block content %}
 
-imagepath {{img}}
+<div class="container">
+    <h1>Prediction for the next 36h on station {{ name }}</h1>
+</div>
 
+<div class="container"></div>
 <img src="{{img}}">
+</div>
+{% endblock %}
