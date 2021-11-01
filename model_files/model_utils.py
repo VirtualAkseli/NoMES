@@ -67,3 +67,41 @@ def predict(config, model):
         config = pd.DataFrame(config)
 
     return model.predict(config)
+
+
+def count_drops(station):
+    minbikes = min(station['predicted'])
+
+    counts = 0
+    was_min = False
+
+    for i, row in station.iterrows():
+        bikes = row['predicted'] 
+
+        # drop starts
+        if not was_min and bikes == minbikes:
+            counts += 1
+            was_min = True
+
+        # drop ends
+        elif was_min and bikes != minbikes:
+            was_min = False
+
+    return counts, int(minbikes)
+
+
+def count_changes(station):
+    counts = 0
+    previous = -1
+
+    for i, row in station.iterrows():
+        bikes = row['predicted'] 
+
+        # print(previous, bikes)
+        if bikes != previous:
+            # found change 
+            counts += 1
+            previous = bikes
+
+        # print(counts)
+    return counts
