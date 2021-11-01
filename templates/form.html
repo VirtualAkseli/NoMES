@@ -8,8 +8,9 @@
             Choose a station:
             <div class="form-group col-6">
                 <select name="station" id="station"> 
-                    <option value="unioninkatu">Unioninkatu</option>
-                    <option value="katu">katu</option>
+                  {% for file in file_names %}
+                    <option value={{file}}>{{file}}</option>
+                  {% endfor %}
                 </select>
             </div>
             <div class="form-group col-6">

@@ -5,6 +5,7 @@ from model_files import model_utils
 import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 import model_files
 
@@ -19,7 +20,13 @@ def test():
 
 @app.route('/predict', methods=['GET'])
 def form():
-    return render_template("form.html")
+
+    file_names = []
+    for file in os.listdir("./model_files/models/"):
+        file = file.replace(".pkl", "").replace("model_", "")
+        file_names.append(file)
+
+    return render_template("form.html", file_names=file_names)
 
 
 # @app.route("/result", methods=["POST"])
@@ -43,7 +50,7 @@ def get_weather_fmi():
     weather = model_utils.construct_weather_data(forecast, station, cols)
     print(weather.head())
 
-    with open(f'model_files/models/model_{station_name}', 'rb') as f:
+    with open(f'model_files/models/model_{station_name}.pkl', 'rb') as f:
     
         print("loading model...")
         model = pickle.load(f)
